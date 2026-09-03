@@ -1,0 +1,18 @@
+
+
+.value-icon {
+  width: 60px;
+  height: 60px;
+  border-radius: 16px;
+  background: linear-gradient(135deg, #eef2ff, #ede9fe);
+  color: #202a4a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+
+.object-fit-cover {
+  object-fit: cover;
+}

@@ -1,0 +1,135 @@
+<div class="form-page">
+
+  <div class="page-header">
+    <h2 class="page-title">{{ isEditMode ? 'Edit Product' : 'Add New Product' }}</h2>
+    <p class="page-subtitle">
+      {{ isEditMode ? 'Update the details of this product' : 'Fill in the details to add a new product to your catalog' }}
+    </p>
+  </div>
+
+  @if (loading) {
+    <div class="loading-state">
+      <div class="spinner"></div>
+      <p>Loading product...</p>
+    </div>
+  }
+
+  @if (!loading) {
+    <div class="form-card">
+
+      @if (errorMessage) {
+        <div class="alert-error">{{ errorMessage }}</div>
+      }
+
+      @if (successMessage) {
+        <div class="alert-success">{{ successMessage }}</div>
+      }
+
+      <form [formGroup]="productForm" (ngSubmit)="onSubmit()">
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="productName">Product Name</label>
+            <input
+              id="productName"
+              type="text"
+              formControlName="productName"
+              placeholder="e.g. Fresh Apples 1kg"
+              class="form-input"
+            />
+            @if (productForm.get('productName')?.touched && productForm.get('productName')?.invalid) {
+              <span class="field-error">Product name is required (max 100 characters)</span>
+            }
+          </div>
+
+          <div class="form-group">
+            <label for="productImageFile">Product Image</label>
+            <input
+              id="productImageFile"
+              type="file"
+              accept="image/*"
+              (change)="onFileSelected($event)"
+              class="form-input file-input"
+            />
+            @if (!isEditMode && !selectedFile) {
+              <span class="field-hint">Image is required</span>
+            }
+            @if (isEditMode && !selectedFile) {
+              <span class="field-hint">Leave blank to keep current image</span>
+            }
+          </div>
+        </div>
+
+        <div class="form-group full-width">
+          <label for="productDesc">Description</label>
+          <textarea
+            id="productDesc"
+            formControlName="productDesc"
+            placeholder="Brief description of the product..."
+            class="form-input"
+            rows="3">
+          </textarea>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="productPrice">Price (₹)</label>
+            <input
+              id="productPrice"
+              type="number"
+              step="0.01"
+              formControlName="productPrice"
+              placeholder="0.00"
+              class="form-input"
+            />
+            @if (productForm.get('productPrice')?.touched && productForm.get('productPrice')?.invalid) {
+              <span class="field-error">Enter a valid price (0 or more)</span>
+            }
+          </div>
+
+          <div class="form-group">
+            <label for="productQuantity">Stock Quantity</label>
+            <input
+              id="productQuantity"
+              type="number"
+              formControlName="productQuantity"
+              placeholder="0"
+              class="form-input"
+            />
+            @if (productForm.get('productQuantity')?.touched && productForm.get('productQuantity')?.invalid) {
+              <span class="field-error">Enter a valid quantity (0 or more)</span>
+            }
+          </div>
+        </div>
+
+        <!-- Image preview: new selection takes priority, else show existing (edit mode) -->
+        @if (imagePreviewUrl || existingImageUrl) {
+          <div class="image-preview">
+            <label>{{ imagePreviewUrl ? 'New Image Preview' : 'Current Image' }}</label>
+            <img [src]="imagePreviewUrl || existingImageUrl" alt="Preview" />
+            @if (imagePreviewUrl) {
+              <p class="field-hint">
+                Note: Upload isn't connected yet — a placeholder image URL will be saved instead.
+              </p>
+            }
+          </div>
+        }
+
+        <div class="form-actions">
+          <button type="button" class="btn-cancel" (click)="onCancel()">
+            Cancel
+          </button>
+          <button type="submit" class="btn-primary" [disabled]="submitting">
+            @if (submitting) {
+              <span>Saving...</span>
+            } @else {
+              <span>{{ isEditMode ? 'Update Product' : 'Add Product' }}</span>
+            }
+          </button>
+        </div>
+
+      </form>
+    </div>
+  }
+
+</div>

@@ -1,0 +1,71 @@
+<div class="home-container">
+
+  <div class="hero-banner">
+    <h1>Micro Basket, Delivered Fast</h1>
+    <p>Shop the best quality products at unbeatable prices</p>
+  </div>
+
+  @if (loading) {
+    <div class="loading-state">
+      <div class="spinner"></div>
+      <p>Loading products...</p>
+    </div>
+  }
+
+  @if (errorMessage) {
+    <div class="alert-error">{{ errorMessage }}</div>
+  }
+
+  @if (!loading && !errorMessage) {
+    <div class="products-grid">
+      @for (product of products; track product.id) {
+        <div class="product-card" (click)="viewProduct(product.id)">
+
+          <div class="product-image-wrap">
+            <img [src]="product.productImage" [alt]="product.productName" class="product-image" />
+            @if (product.productQuantity === 0) {
+              <span class="out-of-stock-badge">Out of Stock</span>
+            }
+          </div>
+
+          <div class="product-info">
+            <h3 class="product-name">{{ product.productName }}</h3>
+            <p class="product-price">₹{{ product.productPrice | number:'1.2-2' }}</p>
+
+            <div class="product-actions">
+              @if(!this.cartService.isExisting(product))
+              {
+                <button
+                  class="btn-add-cart"
+                  [disabled]="product.productQuantity === 0"
+                  (click)="addToCart($event, product)">
+                  <i class="bi bi-cart-plus me-1"></i>
+                  Add to Cart
+                </button>
+              }
+              @else
+              {
+                <a routerLink="/cart" class="btn-add-cart btn">
+                  <i class="bi bi-cart2"></i> 
+                  <span class="cart-count me-1">Go to cart</span>
+                </a>
+              }
+              <button
+                class="btn-buy-now"
+                [disabled]="product.productQuantity === 0"
+                (click)="buyNow($event, product)">
+                Buy Now
+              </button>
+            </div>
+          </div>
+
+        </div>
+      } @empty {
+        <div class="empty-state">
+          <p>No products available right now.</p>
+        </div>
+      }
+    </div>
+  }
+
+</div>

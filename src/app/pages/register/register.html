@@ -1,0 +1,119 @@
+<div class="register-wrapper">
+  <div class="register-card">
+    <div class="register-header">
+      <h1>MicroBasket</h1>
+      <p>Create your account to get started.</p>
+    </div>
+
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="register-form">
+
+      @if (errorMessage) {
+        <div class="alert-error">{{ errorMessage }}</div>
+      }
+
+      @if (successMessage) {
+        <div class="alert-success">{{ successMessage }}</div>
+      }
+
+      <!-- Row 1: Name + Email -->
+      <div class="form-row">
+        <div class="form-group">
+          <label for="userName">Full Name</label>
+          <input
+            id="userName"
+            type="text"
+            formControlName="userName"
+            placeholder="Enter Your Full Name"
+            class="form-input"
+          />
+          @if (registerForm.get('userName')?.touched && registerForm.get('userName')?.invalid) {
+            <span class="field-error">Name must be at least 3 characters</span>
+          }
+        </div>
+
+        <div class="form-group">
+          <label for="userEmail">Email</label>
+          <input
+            id="userEmail"
+            type="email"
+            formControlName="userEmail"
+            placeholder="name@gmail.com"
+            class="form-input"
+          />
+          @if (registerForm.get('userEmail')?.touched && registerForm.get('userEmail')?.invalid) {
+            <span class="field-error">Please enter a valid email</span>
+          }
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="userPhone">Phone Number</label>
+          <input
+            id="userPhone"
+            type="tel"
+            formControlName="userPhone"
+            placeholder="98.........."
+            class="form-input"
+          />
+          @if (registerForm.get('userPhone')?.touched && registerForm.get('userPhone')?.invalid) {
+            <span class="field-error">Enter a valid 10-digit phone number</span>
+          }
+        </div>
+
+        <div class="form-group">
+          <label for="userAdd">Address</label>
+          <input
+            id="userAdd"
+            type="text"
+            formControlName="userAdd"
+            placeholder="Street, City, State, PIN"
+            class="form-input"
+          />
+          @if (registerForm.get('userAdd')?.touched && registerForm.get('userAdd')?.invalid) {
+            <span class="field-error">Address is required</span>
+          }
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input
+            id="password"
+            type="password"
+            formControlName="password"
+            placeholder="Create a password"
+            class="form-input"
+          />
+          @if (registerForm.get('password')?.touched && registerForm.get('password')?.invalid) {
+            <span class="field-error">Password must be at least 6 characters</span>
+          }
+        </div>
+
+        <div class="form-group">
+          <label for="confirmPassword">Confirm Password</label>
+          <input
+            id="confirmPassword"
+            type="password"
+            formControlName="confirmPassword"
+            placeholder="Re-enter your password"
+            class="form-input"
+          />
+        </div>
+      </div>
+
+      <button type="submit" class="btn-primary" [disabled]="loading">
+        @if (loading) {
+          <span>Creating account...</span>
+        } @else {
+          <span>Register</span>
+        }
+      </button>
+
+      <p class="login-link">
+        Already have an account? <a routerLink="/login">Login</a>
+      </p>
+    </form>
+  </div>
+</div>

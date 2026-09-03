@@ -1,0 +1,81 @@
+<div class="admin-shell d-flex align-items-start">
+
+  <!-- Sidebar -->
+  <aside class="sidebar sticky-top vh-100" [class.collapsed]="sidebarCollapsed">
+
+    <div class="sidebar-brand">
+      <i class="bi bi-basket2-fill brand-icon"></i>
+      @if (!sidebarCollapsed) {
+        <span class="brand-text">Micro<b>Basket</b></span>
+      }
+    </div>
+
+    <nav class="sidebar-nav">
+
+      <a
+        routerLink="/admin/dashboard"
+        routerLinkActive="active"
+        class="nav-item">
+        <i class="bi bi-grid-1x2-fill"></i>
+        @if (!sidebarCollapsed) { <span>Dashboard</span> }
+      </a>
+
+      <a
+        routerLink="/admin/users"
+        routerLinkActive="active"
+        class="nav-item">
+        <i class="bi bi-people-fill"></i>
+        @if (!sidebarCollapsed) { <span>Users</span> }
+      </a>
+
+      <a
+        routerLink="/admin/products"
+        routerLinkActive="active"
+        class="nav-item">
+        <i class="bi bi-box-seam-fill"></i>
+        @if (!sidebarCollapsed) { <span>Products</span> }
+      </a>
+
+      <a
+        routerLink="/admin/orders"
+        routerLinkActive="active"
+        class="nav-item">
+        <i class="bi bi-receipt"></i>
+        @if (!sidebarCollapsed) { <span>Orders</span> }
+      </a>
+      <a routerLink="/admin/low-stock" routerLinkActive="active" class="nav-item">
+        <i class="bi bi-exclamation-triangle-fill"></i>
+        @if (!sidebarCollapsed) { <span>Low Stock</span> }
+      </a>
+    </nav>
+
+    <div class="sidebar-footer">
+      <button class="nav-item logout-btn" (click)="logout()">
+        <i class="bi bi-box-arrow-right"></i>
+        @if (!sidebarCollapsed) { <span>Logout</span> }
+      </button>
+    </div>
+
+  </aside>
+
+  <!-- Main content area -->
+  <div class="admin-main">
+
+    <header class="admin-topbar">
+      <button class="toggle-btn" (click)="toggleSidebar()">
+        <i class="bi bi-list"></i>
+      </button>
+
+      <div class="topbar-right">
+        <i class="bi bi-person-circle me-2"></i>
+        <span>{{ adminName }}</span>
+      </div>
+    </header>
+
+    <main class="admin-content">
+      <router-outlet></router-outlet>
+    </main>
+
+  </div>
+
+</div>

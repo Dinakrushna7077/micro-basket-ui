@@ -1,0 +1,154 @@
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-8 col-md-10">
+
+      <!-- Loading State -->
+      @if (isLoading()) {
+        <div class="card shadow-sm border-0 text-center py-5">
+          <div class="card-body">
+            <div class="spinner-border text-primary mb-3" role="status">
+              <span class="visually-hidden">Loading...</span>
+            </div>
+            <p class="text-muted mb-0">Loading form data...</p>
+          </div>
+        </div>
+      } @else {
+
+        <div class="card shadow-sm border-0">
+          
+          <!-- Card Header -->
+          <div class="card-header bg-white border-bottom py-3 px-4 d-flex justify-content-between align-items-center">
+            <div>
+              <h4 class="mb-0 fw-bold text-dark">Edit Profile</h4>
+              <small class="text-muted">Update account information for ID #{{ userId() }}</small>
+            </div>
+            <a [routerLink]="['/profile', userId()]" class="btn btn-outline-secondary btn-sm">
+              <i class="bi bi-arrow-left me-1"></i> Back
+            </a>
+          </div>
+
+          <!-- Card Body / Form -->
+          <div class="card-body p-4">
+
+            <!-- Alerts -->
+            @if (successMessage()) {
+              <div class="alert alert-success d-flex align-items-center mb-4" role="alert">
+                <i class="bi bi-check-circle-fill me-2"></i>
+                <div>{{ successMessage() }}</div>
+              </div>
+            }
+
+            @if (errorMessage()) {
+              <div class="alert alert-danger d-flex align-items-center mb-4" role="alert">
+                <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                <div>{{ errorMessage() }}</div>
+              </div>
+            }
+
+            <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+              <div class="row g-3">
+
+                <!-- User Name -->
+                <div class="col-md-6">
+                  <label for="userName" class="form-label fw-semibold">User Name</label>
+                  <input
+                    type="text"
+                    id="userName"
+                    formControlName="userName"
+                    class="form-control"
+                    [class.is-invalid]="profileForm.get('userName')?.invalid && profileForm.get('userName')?.touched"
+                    placeholder="Enter full name"
+                  />
+                  @if (profileForm.get('userName')?.invalid && profileForm.get('userName')?.touched) {
+                    <div class="invalid-feedback">
+                      @if (profileForm.get('userName')?.hasError('required')) { Name is required. }
+                      @if (profileForm.get('userName')?.hasError('minlength')) { Minimum 3 characters required. }
+                    </div>
+                  }
+                </div>
+
+                <!-- Email Address -->
+                <div class="col-md-6">
+                  <label for="userEmail" class="form-label fw-semibold">Email Address</label>
+                  <input
+                    type="email"
+                    id="userEmail"
+                    formControlName="userEmail"
+                    class="form-control"
+                    [class.is-invalid]="profileForm.get('userEmail')?.invalid && profileForm.get('userEmail')?.touched"
+                    placeholder="name@example.com"
+                  />
+                  @if (profileForm.get('userEmail')?.invalid && profileForm.get('userEmail')?.touched) {
+                    <div class="invalid-feedback">
+                      @if (profileForm.get('userEmail')?.hasError('required')) { Email is required. }
+                      @if (profileForm.get('userEmail')?.hasError('email')) { Enter a valid email address. }
+                    </div>
+                  }
+                </div>
+
+                <!-- Phone Number -->
+                <div class="col-md-6">
+                  <label for="userPhone" class="form-label fw-semibold">Phone Number</label>
+                  <input
+                    type="tel"
+                    id="userPhone"
+                    formControlName="userPhone"
+                    class="form-control"
+                    [class.is-invalid]="profileForm.get('userPhone')?.invalid && profileForm.get('userPhone')?.touched"
+                    placeholder="+1 (555) 000-0000"
+                  />
+                  @if (profileForm.get('userPhone')?.invalid && profileForm.get('userPhone')?.touched) {
+                    <div class="invalid-feedback">
+                      @if (profileForm.get('userPhone')?.hasError('required')) { Phone number is required. }
+                      @if (profileForm.get('userPhone')?.hasError('pattern')) { Invalid phone number format. }
+                    </div>
+                  }
+                </div>
+
+                
+
+                <div class="col-12">
+                  <label for="userAdd" class="form-label fw-semibold">Address</label>
+                  <textarea
+                    id="userAdd"
+                    rows="3"
+                    formControlName="userAdd"
+                    class="form-control"
+                    [class.is-invalid]="profileForm.get('userAdd')?.invalid && profileForm.get('userAdd')?.touched"
+                    placeholder="Street, City, Country"
+                  ></textarea>
+                  @if (profileForm.get('userAdd')?.invalid && profileForm.get('userAdd')?.touched) {
+                    <div class="invalid-feedback">Address is required.</div>
+                  }
+                </div>
+
+              </div>
+
+              <hr class="my-4" />
+
+              <!-- Form Buttons -->
+              <div class="d-flex justify-content-end gap-2">
+                <a [routerLink]="['/profile', userId()]" class="btn btn-outline-secondary">Cancel</a>
+                <button
+                  type="submit"
+                  class="btn btn-primary px-4"
+                  [disabled]="profileForm.invalid || isSaving()"
+                >
+                  @if (isSaving()) {
+                    <span class="spinner-border spinner-border-sm me-1" role="status" aria-hidden="true"></span>
+                    Saving...
+                  } @else {
+                    Save Changes
+                  }
+                </button>
+              </div>
+
+            </form>
+          </div>
+
+        </div>
+      }
+
+    </div>
+  </div>
+</div>

@@ -1,0 +1,163 @@
+<div class="contact-page">
+
+  <!-- Hero -->
+  <section class="bg-micro text-center text-dark py-5">
+    <div class="container">
+      <h1 class="display-6 fw-bold mb-2">Get In Touch</h1>
+      <p class="lead mb-0">We'd love to hear from you. Send us a message anytime.</p>
+    </div>
+  </section>
+
+  <section class="py-5">
+    <div class="container">
+      <div class="row g-4">
+
+        <!-- Contact Info -->
+        <div class="col-lg-4">
+          <div class="card border-0 shadow-sm h-100">
+            <div class="card-body p-4">
+              <h5 class="fw-bold mb-4">Contact Information</h5>
+
+              <div class="d-flex align-items-start mb-4">
+                <div class="info-icon me-3">
+                  <i class="bi bi-geo-alt-fill"></i>
+                </div>
+                <div>
+                  <h6 class="fw-semibold mb-1">Address</h6>
+                  <p class="text-muted small mb-0">399 Market Street, Mayurbhanj, Odisha, India - 752001</p>
+                </div>
+              </div>
+
+              <div class="d-flex align-items-start mb-4">
+                <div class="info-icon me-3">
+                  <i class="bi bi-telephone-fill"></i>
+                </div>
+                <div>
+                  <h6 class="fw-semibold mb-1">Phone</h6>
+                  <p class="text-muted small mb-0">+91 98765 43210</p>
+                </div>
+              </div>
+
+              <div class="d-flex align-items-start mb-4">
+                <div class="info-icon me-3">
+                  <i class="bi bi-envelope-fill"></i>
+                </div>
+                <div>
+                  <h6 class="fw-semibold mb-1">Email</h6>
+                  <p class="text-muted small mb-0">support.microbasket&#64;gmail.com</p>
+                </div>
+              </div>
+
+              <div class="d-flex align-items-start">
+                <div class="info-icon me-3">
+                  <i class="bi bi-clock-fill"></i>
+                </div>
+                <div>
+                  <h6 class="fw-semibold mb-1">Working Hours</h6>
+                  <p class="text-muted small mb-0">24X7</p>
+                </div>
+              </div>
+
+              <hr class="my-4" />
+
+              <h6 class="fw-semibold mb-3">Follow Us</h6>
+              <div class="d-flex gap-2">
+                <a href="#" class="social-btn"><i class="bi bi-facebook"></i></a>
+                <a href="#" class="social-btn"><i class="bi bi-twitter-x"></i></a>
+                <a href="#" class="social-btn"><i class="bi bi-instagram"></i></a>
+                <a href="#" class="social-btn"><i class="bi bi-linkedin"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Contact Form -->
+        <div class="col-lg-8">
+          <div class="card border-0 shadow-sm">
+            <div class="card-body p-4 p-md-5">
+              <h5 class="fw-bold mb-4">Send Us a Message</h5>
+
+              @if (successMessage) {
+                <div class="alert alert-success d-flex align-items-center" role="alert">
+                  <i class="bi bi-check-circle-fill me-2"></i>
+                  {{ successMessage }}
+                </div>
+              }
+
+              <form [formGroup]="contactForm" (ngSubmit)="onSubmit()">
+                <div class="row g-3">
+
+                  <div class="col-md-6">
+                    <label for="name" class="form-label fw-semibold">Full Name</label>
+                    <input
+                      id="name"
+                      type="text"
+                      formControlName="name"
+                      class="form-control"
+                      [class.is-invalid]="contactForm.get('name')?.touched && contactForm.get('name')?.invalid"
+                      placeholder="Enter Your Name"
+                    />
+                    <div class="invalid-feedback">Please enter your name.</div>
+                  </div>
+
+                  <div class="col-md-6">
+                    <label for="email" class="form-label fw-semibold">Email Address</label>
+                    <input
+                      id="email"
+                      type="email"
+                      formControlName="email"
+                      class="form-control"
+                      [class.is-invalid]="contactForm.get('email')?.touched && contactForm.get('email')?.invalid"
+                      placeholder="Enter Your Gmail"
+                    />
+                    <div class="invalid-feedback">Please enter a valid email.</div>
+                  </div>
+
+                  <div class="col-12">
+                    <label for="subject" class="form-label fw-semibold">Subject</label>
+                    <input
+                      id="subject"
+                      type="text"
+                      formControlName="subject"
+                      class="form-control"
+                      [class.is-invalid]="contactForm.get('subject')?.touched && contactForm.get('subject')?.invalid"
+                      placeholder="Enter Subject"
+                    />
+                    <div class="invalid-feedback">Please enter a subject.</div>
+                  </div>
+
+                  <div class="col-12">
+                    <label for="message" class="form-label fw-semibold">Message</label>
+                    <textarea
+                      id="message"
+                      formControlName="message"
+                      class="form-control"
+                      [class.is-invalid]="contactForm.get('message')?.touched && contactForm.get('message')?.invalid"
+                      rows="5"
+                      placeholder="Enter Your Query...">
+                    </textarea>
+                    <div class="invalid-feedback">Message must be at least 10 characters.</div>
+                  </div>
+
+                  <div class="col-12">
+                    <button type="submit" class=" micro-btn btn-lg px-4" [disabled]="submitting">
+                      @if (submitting) {
+                        <span class="spinner-border spinner-border-sm me-2"></span>
+                        <span>Sending...</span>
+                      } @else {
+                        <span><i class="bi bi-send-fill me-2"></i>Send Message</span>
+                      }
+                    </button>
+                  </div>
+
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+</div>

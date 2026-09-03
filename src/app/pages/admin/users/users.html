@@ -1,0 +1,76 @@
+<div class="users-container">
+
+  <div class="page-header">
+    <h2 class="page-title">User Management</h2>
+    <p class="page-subtitle">Grant or revoke login access for registered customers</p>
+  </div>
+
+  @if (loading) {
+    <div class="loading-state">
+      <div class="spinner"></div>
+      <p>Loading users...</p>
+    </div>
+  }
+
+  @if (errorMessage) {
+    <div class="alert-error">{{ errorMessage }}</div>
+  }
+
+  @if (!loading && !errorMessage) {
+    <div class="panel">
+      <div class="table-wrapper">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <!-- <th>ID</th> -->
+              <th>Name</th>
+              <th>Email</th>
+              <th>Phone</th>
+              <th>Address</th>
+              <th>Joined</th>
+              <th>Login Access</th>
+              <th class="text-center">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (user of users; track user.id) {
+              <tr>
+                <!-- <td>#{{ user.id }}</td> -->
+                <td class="user-name">{{ user.userName }}</td>
+                <td>{{ user.userEmail }}</td>
+                <td>{{ user.userPhone }}</td>
+                <td class="address-cell">{{ user.userAdd }}</td>
+                <td>{{ user.createdDate | date:'dd MMM yyyy' }}</td>
+                <td class="text-center">
+                  <span class="badge" [ngClass]="user.status ? 'badge-success' : 'badge-danger'">
+                    {{ user.status ? 'Yes' : 'No' }}
+                  </span>
+                </td>
+                <td>
+                  <button
+                    class="btn-toggle"
+                    [ngClass]="user.status ? 'btn-revoke' : 'btn-grant'"
+                    [disabled]="updatingUserId === user.id"
+                    (click)="toggleAccess(user)">
+                    @if (updatingUserId === user.id) {
+                      <span>Updating...</span>
+                    } @else if (user.status) {
+                      <span><i class="bi bi-slash-circle me-1"></i>Revoke Access</span>
+                    } @else {
+                      <span><i class="bi bi-check-circle me-1"></i>Grant Access</span>
+                    }
+                  </button>
+                </td>
+              </tr>
+            } @empty {
+              <tr>
+                <td colspan="8" class="empty-row">No users found.</td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+  }
+
+</div>

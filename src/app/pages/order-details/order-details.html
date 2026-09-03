@@ -1,0 +1,83 @@
+<div class="details-container">
+
+  <a routerLink="/my-orders" class="back-link">
+    <i class="bi bi-arrow-left me-1"></i>
+    Back to My Orders
+  </a>
+
+  @if (loading) {
+    <div class="loading-state">
+      <div class="spinner"></div>
+      <p>Loading order details...</p>
+    </div>
+  }
+
+  @if (errorMessage) {
+    <div class="alert-error">{{ errorMessage }}</div>
+  }
+
+  @if (!loading && !errorMessage && items.length > 0) {
+
+    <div class="details-card">
+
+      <div class="details-header">
+        <div>
+          <h2>Order #{{ orderId }}</h2>
+          <p class="order-date">Placed on {{ orderDate | date:'dd MMM yyyy, h:mm a' }}</p>
+        </div>
+        <span class="badge" [ngClass]="getStatusClass(overallStatus)">
+          {{ overallStatus }}
+        </span>
+      </div>
+
+      <!-- Progress tracker -->
+      @if (overallStatus?.toLowerCase() !== 'cancelled') {
+        <div class="status-tracker">
+          @for (step of ['Pending', 'Confirmed', 'Shipped', 'Delivered']; track step; let i = $index) {
+            <div class="tracker-step" [class.completed]="i <= getStatusStep(overallStatus)">
+              <div class="tracker-dot"></div>
+              <span>{{ step }}</span>
+            </div>
+          }
+        </div>
+      }
+
+      <!-- Product Items -->
+      <div class="items-section">
+        <h4>Items in this order ({{ items.length }})</h4>
+
+        @for (item of items; track item.id) {
+          <div class="item-row">
+            <img [src]="item.url" [alt]="item.productName" class="item-thumb" />
+
+            <div class="item-info">
+              <h5>{{ item.productName }}</h5>
+              <p class="item-desc">{{ item.productDescription }}</p>
+              <p class="item-meta">Qty: {{ item.quantity }} &nbsp;•&nbsp; ₹{{ item.price | number:'1.2-2' }} each</p>
+            </div>
+
+            <div class="item-subtotal">
+              ₹{{ item.price | number:'1.2-2' }}
+            </div>
+          </div>
+        }
+      </div>
+
+      <!-- Total -->
+      <div class="details-footer">
+        <span>Grand Total</span>
+        <span class="grand-total">₹{{ grandTotal | number:'1.2-2' }}</span>
+      </div>
+
+    </div>
+
+  }
+
+  @if (!loading && !errorMessage && items.length === 0) {
+    <div class="empty-state">
+      <i class="bi bi-exclamation-circle"></i>
+      <p>No details found for this order.</p>
+    </div>
+  }
+
+</div>

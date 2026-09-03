@@ -1,0 +1,83 @@
+<div class="products-container">
+
+  <div class="page-header">
+    <div>
+      <h2 class="page-title">Products</h2>
+      <p class="page-subtitle">Manage your product catalog</p>
+    </div>
+    <a routerLink="/admin/products/add" class="btn-add">
+      <i class="bi bi-plus-lg me-1"></i>
+      Add Product
+    </a>
+  </div>
+
+  <div class="search-bar">
+    <input
+      type="text"
+      [(ngModel)]="searchTerm"
+      (keyup.enter)="onSearch()"
+      placeholder="Search products by name..."
+      class="search-input"
+    />
+    <button class="btn-search" (click)="onSearch()">
+      <i class="bi bi-search"></i>
+    </button>
+  </div>
+
+  @if (loading) {
+    <div class="loading-state">
+      <div class="spinner"></div>
+      <p>Loading products...</p>
+    </div>
+  }
+
+  @if (errorMessage) {
+    <div class="alert-error">{{ errorMessage }}</div>
+  }
+
+  @if (!loading && !errorMessage) {
+    <div class="panel">
+      <div class="table-wrapper">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Image</th>
+              <th>Name</th>
+              <th>Description</th>
+              <th>Price</th>
+              <th>Stock</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (product of products; track product.id) {
+              <tr>
+                <td>
+                  <img [src]="product.productImage" [alt]="product.productName" class="product-thumb" />
+                </td>
+                <td class="product-name">{{ product.productName }}</td>
+                <td class="desc-cell">{{ product.productDesc || '—' }}</td>
+                <td>₹{{ product.productPrice | number:'1.2-2' }}</td>
+                <td>
+                  <span class="badge" [ngClass]="getStockClass(product.productQuantity)">
+                    {{ product.productQuantity }}
+                  </span>
+                </td>
+                <td>
+                  <a [routerLink]="['/admin/products/edit', product.id]" class="btn-edit">
+                    <i class="bi bi-pencil-square me-1"></i>Edit
+                  </a>
+                </td>
+              </tr>
+            } @empty {
+              <tr>
+                <td colspan="6" class="empty-row">No products found.</td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+  }
+
+</div>

@@ -1,0 +1,57 @@
+<div class="login-wrapper">
+  <div class="login-card">
+    <div class="login-header">
+      <h1>MicroBasket</h1>
+      <p>Welcome back! Please login to your account.</p>
+    </div>
+
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form">
+
+      @if (errorMessage) {
+        <div class="alert-error">
+          {{ errorMessage }}
+        </div>
+      }
+
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input
+          id="email"
+          type="email"
+          formControlName="email"
+          placeholder="name@gmail.com"
+          class="form-input"
+        />
+        @if (loginForm.get('email')?.touched && loginForm.get('email')?.invalid) {
+          <span class="field-error">Please enter a valid email</span>
+        }
+      </div>
+
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input
+          id="password"
+          type="password"
+          formControlName="password"
+          placeholder="Enter your password"
+          class="form-input"
+        />
+        @if (loginForm.get('password')?.touched && loginForm.get('password')?.invalid) {
+          <span class="field-error">Password must be at least 6 characters</span>
+        }
+      </div>
+
+      <button type="submit" class="btn-primary" [disabled]="loading">
+        @if (loading) {
+          <span>Logging in...</span>
+        } @else {
+          <span>Login</span>
+        }
+      </button>
+
+      <p class="signup-link">
+        Don't have an account? <a routerLink="/register">Register now</a>
+      </p>
+    </form>
+  </div>
+</div>

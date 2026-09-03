@@ -1,0 +1,240 @@
+.details-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 30px 20px;
+  font-family: 'Segoe UI', Roboto, Arial, sans-serif;
+}
+
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  color: #4f46e5;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  margin-bottom: 20px;
+}
+
+.back-link:hover {
+  text-decoration: underline;
+}
+
+.loading-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 0;
+  color: #6b7280;
+}
+
+.spinner {
+  width: 36px;
+  height: 36px;
+  border: 4px solid #e5e7eb;
+  border-top-color: #4f46e5;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  margin-bottom: 12px;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.alert-error {
+  background: #fee2e2;
+  color: #b91c1c;
+  padding: 12px 16px;
+  border-radius: 8px;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+  color: #6b7280;
+}
+
+.empty-state i {
+  font-size: 40px;
+  color: #d1d5db;
+  margin-bottom: 12px;
+  display: block;
+}
+
+.details-card {
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 2px 14px rgba(0, 0, 0, 0.07);
+  padding: 28px;
+}
+
+.details-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding-bottom: 20px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.details-header h2 {
+  font-size: 20px;
+  font-weight: 700;
+  color: #1f2937;
+  margin: 0 0 4px;
+}
+
+.order-date {
+  font-size: 13px;
+  color: #9ca3af;
+  margin: 0;
+}
+
+.badge {
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.badge-success   { background: #d1fae5; color: #065f46; }
+.badge-warning   { background: #fef3c7; color: #92400e; }
+.badge-danger    { background: #fee2e2; color: #b91c1c; }
+.badge-info      { background: #dbeafe; color: #1e40af; }
+.badge-primary   { background: #ede9fe; color: #5b21b6; }
+.badge-secondary { background: #f3f4f6; color: #4b5563; }
+
+/* Status tracker */
+.status-tracker {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px 0;
+  margin-bottom: 24px;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.tracker-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+  position: relative;
+  color: #d1d5db;
+}
+
+.tracker-step:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  top: 6px;
+  left: 55%;
+  width: 90%;
+  height: 2px;
+  background: #e5e7eb;
+  z-index: 0;
+}
+
+.tracker-step.completed:not(:last-child)::after {
+  background: #4f46e5;
+}
+
+.tracker-dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #e5e7eb;
+  margin-bottom: 6px;
+  z-index: 1;
+}
+
+.tracker-step.completed .tracker-dot {
+  background: #4f46e5;
+}
+
+.tracker-step span {
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.tracker-step.completed span {
+  color: #4f46e5;
+}
+
+.items-section h4 {
+  font-size: 15px;
+  font-weight: 700;
+  color: #1f2937;
+  margin: 0 0 16px;
+}
+
+.item-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 14px 0;
+  border-bottom: 1px solid #f9fafb;
+}
+
+.item-row:last-child {
+  border-bottom: none;
+}
+
+.item-thumb {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 10px;
+  background: #f3f4f6;
+  flex-shrink: 0;
+}
+
+.item-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.item-info h5 {
+  font-size: 14px;
+  font-weight: 600;
+  color: #1f2937;
+  margin: 0 0 4px;
+}
+
+.item-desc {
+  font-size: 12px;
+  color: #9ca3af;
+  margin: 0 0 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.item-meta {
+  font-size: 12px;
+  color: #6b7280;
+  margin: 0;
+}
+
+.item-subtotal {
+  font-weight: 700;
+  color: #1f2937;
+  flex-shrink: 0;
+}
+
+.details-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 20px;
+  margin-top: 20px;
+  border-top: 1px solid #f1f5f9;
+  font-weight: 700;
+  font-size: 16px;
+  color: #1f2937;
+}
+
+.grand-total {
+  color: #4f46e5;
+  font-size: 20px;
+}

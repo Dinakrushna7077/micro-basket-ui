@@ -1,0 +1,97 @@
+<div class="orders-container">
+
+  <div class="page-header">
+    <h2 class="page-title">Orders</h2>
+    <p class="page-subtitle">View and manage customer orders</p>
+  </div>
+
+  <!-- Filter tabs -->
+  <div class="filter-tabs">
+    @for (tab of filterTabs; track tab) {
+      <button
+        class="tab-btn"
+        [class.active]="activeFilter === tab"
+        (click)="loadOrders(tab)">
+        {{ tab === 'all' ? 'All' : tab }}
+      </button>
+    }
+  </div>
+
+  @if (loading) {
+    <div class="loading-state">
+      <div class="spinner"></div>
+      <p>Loading orders...</p>
+    </div>
+  }
+
+  @if (errorMessage) {
+    <div class="alert-error">{{ errorMessage }}</div>
+  }
+
+  @if (!loading && !errorMessage) {
+    <div class="panel">
+      <div class="table-wrapper">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <!-- <th>Order ID</th> -->
+              <th>Product</th>
+              <th>Customer</th>
+              <th>Phone</th>
+              <th>Address</th>
+              <th>Qty</th>
+              <th>Price</th>
+              <th>Date</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (order of orders; track order.orderId) {
+              <tr>
+                <!-- <td>#{{ order.orderId }}</td> -->
+                <td class="product-cell">
+                  @if (order.url) {
+                    <img [src]="order.url" [alt]="order.productName" class="product-thumb" />
+                  }
+                  {{ order.productName }}
+                </td>
+                <td>{{ order.custName }}</td>
+                <td>{{ order.phone }}</td>
+                <td class="address-cell">{{ order.address }}</td>
+                <td>{{ order.quantity }}</td>
+                <td>₹{{ order.price | number:'1.2-2' }}</td>
+                <td>{{ order.orderDate | date:'dd MMM yyyy' }}</td>
+                <td>
+                  <div class="status-cell">
+                    <span class="badge" [ngClass]="getStatusClass(order.orderStatus)">
+                      {{ order.orderStatus }}
+                    </span>
+
+                    <select
+                      class="status-select"
+                      [ngModel]="order.orderStatus"
+                      (ngModelChange)="onStatusChange(order, $event)"
+                      [disabled]="updatingOrderId === order.orderId">
+                      @for (status of allStatuses; track status) {
+                        <option [value]="status">{{ status }}</option>
+                      }
+                    </select>
+
+                    @if (updatingOrderId === order.orderId) {
+                      <span class="updating-spinner"></span>
+                    }
+                  </div>
+                </td>
+              </tr>
+            } @empty {
+              <tr>
+                <td colspan="9" class="empty-row">No orders found.</td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+  }
+
+</div>

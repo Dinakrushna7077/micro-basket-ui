@@ -1,1 +1,44 @@
 /* You can add global styles to this file, and also import other style files */
+/* @import "/node_modules/bootstrap/dist/css/bootstrap.min.css" */  
+
+.mb-bg {
+    background-color: #2d3e50 !important;
+}
+
+.brand-icon {
+  color: #24e1b2;
+  font-size: 22px;
+}
+
+.brand-highlight {
+  color: #cae919;
+}
+
+.bg-brand {
+  background-color: #cae919;
+}
+.micro-btn{
+  display: inline-block;
+  padding: 8px 24px;
+  background: #cae919;
+  color: black;
+  border-radius: 5px;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  border: 0px;
+}
+.micro-btn:hover{
+  background-color: #bfde44;
+  color: black;
+}
+.micro-btn:disabled{
+  background-color: #d9f07b;
+    cursor: not-allowed;
+}
+
+.bg-micro{
+    background: linear-gradient(135deg,#24e1b2 0%, #cae919 100%);
+    color: black;
+}

@@ -1,0 +1,81 @@
+<div class="about-page">
+
+  <!-- Hero -->
+  <section class="bg-micro text-center text-dark py-5">
+    <div class="container">
+      <h1 class="display-5 fw-bold mb-3">About MicroBasket</h1>
+      <p class="lead mb-0 mx-auto" style="max-width: 600px;">
+        Your trusted online store for quality products, delivered right to your doorstep
+        with speed and care.
+      </p>
+    </div>
+  </section>
+
+  <!-- Our Story -->
+  <section class="py-5">
+    <div class="container">
+      <div class="row align-items-center g-5">
+        <div class="col-lg-6">
+          <span class="badge bg-primary-subtle text-secondary mb-3 px-3 py-2 rounded-pill">Our Story</span>
+          <h2 class="fw-bold mb-3">Bringing Quality to Your Doorstep</h2>
+          <p class="text-muted mb-3">
+            MicroBasket started with a simple idea — online shopping should be easy, fast,
+            and reliable. What began as a small delivery service has grown into a platform
+            trusted by thousands of customers across the country.
+          </p>
+          <p class="text-muted mb-0">
+            We work directly with trusted suppliers to ensure every product we deliver
+            meets the highest standards of quality and value.
+          </p>
+        </div>
+        <div class="col-lg-6">
+          <div class="ratio ratio-4x3 rounded-4 overflow-hidden shadow-sm">
+            <img
+              src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=800&q=80"
+              alt="Our store"
+              class="object-fit-cover"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Values -->
+  <section class="py-5 bg-light">
+    <div class="container">
+      <div class="text-center mb-5">
+        <h2 class="fw-bold">Why Choose Us</h2>
+        <p class="text-muted">The values that drive everything we do</p>
+      </div>
+
+      <div class="row g-4">
+        @for (value of values; track value.title) {
+          <div class="col-md-6 col-lg-3">
+            <div class="card border-0 shadow-sm h-100 text-center p-3">
+              <div class="card-body">
+                <div class="value-icon mx-auto mb-3">
+                  <i class="bi {{ value.icon }} fs-3"></i>
+                </div>
+                <h5 class="fw-bold mb-2">{{ value.title }}</h5>
+                <p class="text-muted small mb-0">{{ value.desc }}</p>
+              </div>
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="py-5">
+    <div class="container">
+      <div class="bg-micro text-center text-dark rounded-4 p-5">
+        <h2 class="fw-bold mb-3">Ready to Start Shopping?</h2>
+        <p class="mb-4 opacity-75">Join thousands of happy customers today.</p>
+        <a routerLink="/" class="btn btn-light btn-lg px-4 fw-semibold">Shop Now</a>
+      </div>
+    </div>
+  </section>
+
+</div>

@@ -1,0 +1,51 @@
+<div class="orders-container">
+
+  <h2 class="page-title">My Orders</h2>
+
+  @if (loading) {
+    <div class="loading-state">
+      <div class="spinner"></div>
+      <p>Loading your orders...</p>
+    </div>
+  }
+
+  @if (errorMessage) {
+    <div class="alert-error">{{ errorMessage }}</div>
+  }
+
+  @if (!loading && !errorMessage) {
+
+    @if (orders.length === 0) {
+      <div class="empty-state">
+        <i class="bi bi-bag-x"></i>
+        <p>You haven't placed any orders yet.</p>
+        <a routerLink="/" class="btn-shop">Start Shopping</a>
+      </div>
+    } @else {
+      <div class="orders-list">
+        @for (order of orders; track order.orderId) {
+          <div class="order-row" (click)="viewDetails(order.orderId)">
+
+            <img [src]="order.url" [alt]="order.productName" class="order-thumb" />
+
+            <div class="order-info">
+              <h4>{{ order.productName }}</h4>
+              <p class="order-meta">
+                Order #{{ order.orderId }} &nbsp;•&nbsp; {{ order.orderDate | date:'dd MMM yyyy' }}
+              </p>
+            </div>
+
+            <span class="badge" [ngClass]="getStatusClass(order.orderStatus)">
+              {{ order.orderStatus }}
+            </span>
+
+            <i class="bi bi-chevron-right chevron"></i>
+
+          </div>
+        }
+      </div>
+    }
+
+  }
+
+</div>

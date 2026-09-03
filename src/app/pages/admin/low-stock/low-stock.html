@@ -1,0 +1,58 @@
+<div class="low-stock-container">
+
+  <div class="page-header">
+    <h2 class="page-title">Low Stock Products</h2>
+    <p class="page-subtitle">Products that are running low and may need restocking</p>
+  </div>
+
+  @if (loading) {
+    <div class="loading-state">
+      <div class="spinner"></div>
+      <p>Loading low stock products...</p>
+    </div>
+  }
+
+  @if (errorMessage) {
+    <div class="alert-error">{{ errorMessage }}</div>
+  }
+
+  @if (!loading && !errorMessage) {
+    <div class="panel">
+      <div class="table-wrapper">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <!-- <th>ID</th> -->
+              <th>Product Name</th>
+              <th>Quantity Left</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (item of items; track item.id) {
+              <tr>
+                <!-- <td>#{{ item.id }}</td> -->
+                <td class="product-name">{{ item.productName }}</td>
+                <td>
+                  <span class="badge" [ngClass]="getStockClass(item.productQuantity)">
+                    {{ item.productQuantity }}
+                  </span>
+                </td>
+                <td>
+                  <a [routerLink]="['/admin/products/edit', item.id]" class="btn-edit">
+                    <i class="bi bi-pencil-square me-1"></i>Edit
+                  </a>
+                </td>
+              </tr>
+            } @empty {
+              <tr>
+                <td colspan="4" class="empty-row">All products are well stocked. 🎉</td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+  }
+
+</div>
