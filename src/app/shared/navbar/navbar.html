@@ -25,8 +25,12 @@
 
       <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
         <li class="nav-item d-flex">
-          <input type="text" class="form-control search-inp" placeholder="search">
-          <button class="btn  search-btn"><i class="bi bi-search me-1"></i></button>
+          <input type="text" 
+          [(ngModel)]="searchTerm"
+          (keyup.enter)="onSearch()"
+          placeholder="Search products by name..."
+          class="form-control search-inp" >
+          <button class="btn  search-btn" (click)="onSearch()"><i class="bi bi-search me-1"></i></button>
         </li>
         <li class="nav-item">
           <a
@@ -67,7 +71,7 @@
         {
           <a routerLink="/cart" class="btn btn-light cart-btn position-relative">
             <i class="bi bi-cart3 fs-5"></i>
-            <span class="cart-count">{{ cartCount }}</span>
+            <span class="cart-count">{{ cartCount() }}</span>
           </a>
         }
 

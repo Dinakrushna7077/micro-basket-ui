@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { Cart } from '../../core/services/cart';
 import { Account } from '../../core/services/account';
+import { ProductService } from '../../core/services/product';
 
 @Component({
   selector: 'app-cart',
@@ -15,6 +16,7 @@ import { Account } from '../../core/services/account';
 export class CartPage {
   cartService = inject(Cart);
   accountService = inject(Account);
+  productService = inject(ProductService);
   private router = inject(Router);
 
   errorMessage = '';
@@ -23,6 +25,14 @@ export class CartPage {
     if (currentQty < maxStock) {
       this.cartService.updateQuantity(id, currentQty + 1);
     }
+  }
+  
+  viewProduct(id: number): void {
+    this.router.navigate(['/product', id]);
+  }
+  
+  getImageUrl(imagePath: string): string {
+    return this.productService.getImageUrl(imagePath);
   }
 
   decreaseQty(id: number, currentQty: number): void {

@@ -2,6 +2,7 @@ import { Component, inject, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Admin } from '../../../core/services/admin';
 import { UserListDTO } from '../../../models/admin.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-users',
@@ -13,6 +14,7 @@ import { UserListDTO } from '../../../models/admin.model';
 export class Users implements OnInit {
   private adminService = inject(Admin);
   private cdr = inject(ChangeDetectorRef);
+  private router = inject(Router);
 
   users: UserListDTO[] = [];
   loading = true;
@@ -40,6 +42,7 @@ export class Users implements OnInit {
         this.errorMessage = 'Failed to load user list.';
         this.loading = false;
         this.cdr.detectChanges();
+        this.router.navigate(['/server-error']);
       }
     });
   }

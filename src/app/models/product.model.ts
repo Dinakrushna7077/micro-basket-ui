@@ -16,6 +16,7 @@ export interface ProductDTO {
   productPrice: number;
   productQuantity: number;
   productImage: string;
+  imageFile?: File;
 }
 
 export interface LowStockDTO {

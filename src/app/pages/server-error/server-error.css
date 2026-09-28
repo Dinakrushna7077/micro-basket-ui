@@ -1,0 +1,131 @@
+/* Background canvas pattern */
+.bg-canvas {
+  background-color: #f8fafc;
+  background-image: 
+    radial-gradient(#e2e8f0 1.2px, transparent 1.2px),
+    radial-gradient(#e2e8f0 1.2px, #f8fafc 1.2px);
+  background-size: 32px 32px;
+  background-position: 0 0, 16px 16px;
+}
+
+/* Ambient glow orbs */
+.ambient-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.55;
+  pointer-events: none;
+}
+
+.orb-rose {
+  width: 320px;
+  height: 320px;
+  background: #fecdd3;
+  top: 10%;
+  right: 15%;
+}
+
+.orb-slate {
+  width: 340px;
+  height: 340px;
+  background: #cbd5e1;
+  bottom: 10%;
+  left: 15%;
+}
+
+/* Content container */
+.error-content-wrapper {
+  max-width: 480px;
+  width: 100%;
+}
+
+/* Graphic sizing */
+.scene-graphic {
+  width: 120px;
+  height: 90px;
+  margin: 0 auto;
+}
+
+/* Status badge */
+.status-pill {
+  display: inline-block;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.725rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 0.35rem 0.85rem;
+  border-radius: 9999px;
+}
+
+.status-pill-coral {
+  background-color: #fee2e2;
+  color: #b91c1c;
+}
+
+/* Typography tokens */
+.error-number {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 4.5rem;
+  line-height: 1;
+  letter-spacing: -0.06em;
+  font-weight: 800;
+}
+
+.text-slate-900 { color: #0f172a; }
+.text-slate-800 { color: #1e293b; }
+.text-slate-500 { color: #64748b; }
+
+.lead-caption {
+  font-size: 0.925rem;
+  line-height: 1.6;
+  max-width: 380px;
+}
+
+/* Action buttons */
+.btn-action-primary {
+  background-color: #cae919;
+  color: #000000;
+  border-radius: 0.75rem;
+  padding: 0.7rem 1.4rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  border: none;
+  text-decoration: none;
+  transition: all 0.15s ease;
+}
+
+.btn-action-primary:hover {
+  background-color: #bde105;
+  color: #000000;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.15);
+}
+
+.btn-action-secondary {
+  background-color: #ffffff;
+  color: #334155;
+  border: 1px solid #cbd5e1;
+  border-radius: 0.75rem;
+  padding: 0.7rem 1.4rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  transition: all 0.15s ease;
+}
+
+.btn-action-secondary:hover {
+  background-color: #f8fafc;
+  color: #0f172a;
+  border-color: #94a3b8;
+  transform: translateY(-1px);
+}
+
+/* Blinking alert animation */
+.pulse-alarm {
+  animation: alarmAnim 1.2s infinite ease-in-out;
+}
+
+@keyframes alarmAnim {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.25; }
+}

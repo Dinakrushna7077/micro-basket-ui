@@ -4,6 +4,7 @@ import { Router, RouterLink } from '@angular/router';
 import { OrderService } from '../../core/services/order';
 import { Account } from '../../core/services/account';
 import { OrderListDTO } from '../../models/order.model';
+import { ProductService } from '../../core/services/product';
 
 @Component({
   selector: 'app-my-orders',
@@ -14,6 +15,7 @@ import { OrderListDTO } from '../../models/order.model';
 })
 export class MyOrders implements OnInit {
   private orderService = inject(OrderService);
+  private productService = inject(ProductService);
   private accountService = inject(Account);
   private router = inject(Router);
   private cdr = inject(ChangeDetectorRef);
@@ -34,6 +36,9 @@ export class MyOrders implements OnInit {
     this.loadOrders(uid);
   }
 
+  getImageUrl(imagePath: string): string {
+    return this.productService.getImageUrl(imagePath);
+  }
   loadOrders(uid: number): void {
     this.loading = true;
     this.errorMessage = '';
@@ -51,6 +56,7 @@ export class MyOrders implements OnInit {
         this.errorMessage = 'Failed to load your orders.';
         this.loading = false;
         this.cdr.detectChanges();
+        this.router.navigate(['/server-error']);
       }
     });
   }

@@ -1,6 +1,6 @@
 import { Component, OnInit, inject, signal } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { UserService } from '../../core/services/user';
 
 export interface Customer {
@@ -24,6 +24,7 @@ export interface Customer {
 export class Profile implements OnInit {
   private route = inject(ActivatedRoute);
   private customerService = inject(UserService);
+  private router = inject(Router);
 
   customer = signal<Customer | null>(null);
   isLoading = signal<boolean>(true);
@@ -49,6 +50,8 @@ export class Profile implements OnInit {
       error: (err) => {
         this.errorMessage.set('Failed to load profile details.');
         this.isLoading.set(false);
+        this.router.navigate(['/server-error']);
+
       }
     });
   }

@@ -1,7 +1,7 @@
 import { Routes } from '@angular/router';
 import { Home } from './pages/home/home';
 import { About } from './pages/about/about';
-import { PageNotFound } from './page-not-found/page-not-found';
+import { PageNotFound } from './pages/page-not-found/page-not-found';
 import { Profile } from './pages/profile/profile';
 import { Login } from './pages/login/login';
 import { Register } from './pages/register/register';
@@ -23,6 +23,7 @@ import { ChangePassword } from './pages/change-password/change-password';
 import { OrderDetails } from './pages/order-details/order-details';
 import { Checkout } from './pages/checkout/checkout';
 import { OrderSuccess } from './pages/order-success/order-success';
+import { ServerError } from './pages/server-error/server-error';
 
 export const routes: Routes = [
   { path: '', component: Home },
@@ -56,5 +57,7 @@ export const routes: Routes = [
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' }
     ]
   },
+  {path:'server-error',component:ServerError},
+  { path: 'page-not-found', component: PageNotFound },
   { path: '**', component: PageNotFound }
 ];

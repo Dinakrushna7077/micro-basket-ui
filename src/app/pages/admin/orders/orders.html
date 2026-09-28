@@ -48,10 +48,9 @@
           <tbody>
             @for (order of orders; track order.orderId) {
               <tr>
-                <!-- <td>#{{ order.orderId }}</td> -->
                 <td class="product-cell">
                   @if (order.url) {
-                    <img [src]="order.url" [alt]="order.productName" class="product-thumb" />
+                    <img [src]="getImageUrl(order.url)" [alt]="order.productName" class="product-thumb" />
                   }
                   {{ order.productName }}
                 </td>
@@ -67,15 +66,18 @@
                       {{ order.orderStatus }}
                     </span>
 
-                    <select
-                      class="status-select"
-                      [ngModel]="order.orderStatus"
-                      (ngModelChange)="onStatusChange(order, $event)"
-                      [disabled]="updatingOrderId === order.orderId">
-                      @for (status of allStatuses; track status) {
-                        <option [value]="status">{{ status }}</option>
-                      }
-                    </select>
+                    @if(order.orderStatus !== 'Delivered' && order.orderStatus !== 'Cancelled') {
+                      
+                      <select
+                        class="status-select"
+                        [ngModel]="order.orderStatus"
+                        (ngModelChange)="onStatusChange(order, $event)"
+                        [disabled]="updatingOrderId === order.orderId || order.orderStatus === 'Delivered' || order.orderStatus === 'Cancelled'">
+                        @for (status of allStatuses; track status) {
+                          <option [value]="status">{{ status }}</option>
+                        }
+                      </select>
+                    }
 
                     @if (updatingOrderId === order.orderId) {
                       <span class="updating-spinner"></span>

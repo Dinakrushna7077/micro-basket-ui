@@ -1,79 +1,83 @@
 <div class="detail-container">
 
   @if (loading) {
-    <div class="loading-state">
-      <div class="spinner"></div>
-      <p>Loading product...</p>
-    </div>
+  <div class="loading-state">
+    <div class="spinner"></div>
+    <p>Loading product...</p>
+  </div>
   }
 
   @if (errorMessage) {
-    <div class="alert-error">{{ errorMessage }}</div>
+  <div class="alert-error">{{ errorMessage }}</div>
   }
 
   @if (product && !loading) {
-    <div class="detail-card">
+  <div class="detail-card">
 
-      <div class="detail-image-wrap">
-        <img [src]="product.productImage" [alt]="product.productName" class="detail-image" />
-        @if (product.productQuantity === 0) {
-          <span class="out-of-stock-badge">Out of Stock</span>
-        }
-      </div>
-
-      <div class="detail-info">
-        <h1 class="detail-name">{{ product.productName }}</h1>
-        <p class="detail-price">₹{{ product.productPrice | number:'1.2-2' }}</p>
-
-        <div class="stock-info">
-          @if (product.productQuantity > 0) {
-            <span class="badge-in-stock">
-              <i class="bi bi-check-circle-fill me-1"></i>
-              In Stock ({{ product.productQuantity }} available)
-            </span>
-          } @else {
-            <span class="badge-out-stock">
-              <i class="bi bi-x-circle-fill me-1"></i>
-              Out of Stock
-            </span>
-          }
-        </div>
-
-        <p class="detail-desc">{{ product.productDesc || 'No description available.' }}</p>
-
-        @if (product.productQuantity > 0) {
-          <div class="qty-selector">
-            <label>Quantity</label>
-            <div class="qty-controls">
-              <button (click)="decreaseQty()" [disabled]="quantity <= 1">−</button>
-              <span>{{ quantity }}</span>
-              <button (click)="increaseQty()" [disabled]="quantity >= product.productQuantity">+</button>
-            </div>
-          </div>
-        }
-
-        <div class="detail-actions">
-          <button
-            class="btn-add-cart"
-            [disabled]="product.productQuantity === 0"
-            (click)="addToCart()">
-            <i class="bi bi-cart-plus me-1"></i>
-            Add to Cart
-          </button>
-          <button
-            class="btn-buy-now"
-            [disabled]="product.productQuantity === 0"
-            (click)="buyNow()">
-            Buy Now
-          </button>
-        </div>
-
-        <div class="detail-meta">
-          <span>Product ID: #{{ product.id }}</span>
-        </div>
-      </div>
-
+    <div class="detail-image-wrap">
+      <img [src]="getImageUrl(product.productImage)" [alt]="product.productName" class="detail-image" />
+      @if (product.productQuantity === 0) {
+      <span class="out-of-stock-badge">Out of Stock</span>
+      }
     </div>
+
+    <div class="detail-info">
+      <h1 class="detail-name">{{ product.productName }}</h1>
+      <p class="detail-price">₹{{ product.productPrice | number:'1.2-2' }}</p>
+
+      <div class="stock-info">
+        @if (product.productQuantity > 0) {
+        <span class="badge-in-stock">
+          <i class="bi bi-check-circle-fill me-1"></i>
+          @if(product.productQuantity <= 10) {
+            Hurry up! Only {{ product.productQuantity }} left in stock.
+          } @else {
+            {{ product.productQuantity }} items in stock
+          }
+        </span>
+        } @else {
+        <span class="badge-out-stock">
+          <i class="bi bi-x-circle-fill me-1"></i>
+          Out of Stock
+        </span>
+        }
+      </div>
+
+      <p class="detail-desc">{{ product.productDesc || 'No description available.' }}</p>
+
+      @if (product.productQuantity > 0) {
+      <div class="qty-selector">
+        <label>Quantity</label>
+        <div class="qty-controls">
+          <button (click)="decreaseQty()" [disabled]="quantity <= 1">−</button>
+          <span>{{ quantity }}</span>
+          <button (click)="increaseQty()" [disabled]="quantity >= product.productQuantity">+</button>
+        </div>
+      </div>
+      }
+
+      <div class="detail-actions">
+        @if(!this.cartService.isExisting(product))
+        {
+        <button class="btn-add-cart" [disabled]="product.productQuantity === 0" (click)="addToCart()">
+          <i class="bi bi-cart-plus me-1"></i>
+          Add to Cart
+        </button>
+        }
+        @else
+        {
+        <a routerLink="/cart" class="btn-add-cart btn">
+          <i class="bi bi-cart2"></i>
+          <span class="cart-count me-1">Go to cart</span>
+        </a>
+        }
+        <button class="btn-buy-now" [disabled]="product.productQuantity === 0" (click)="buyNow(product)">
+          Buy Now
+        </button>
+      </div>
+    </div>
+
+  </div>
   }
 
 </div>

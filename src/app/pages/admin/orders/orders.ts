@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { OrderService } from '../../../core/services/order';
 import { OrderListDTO, ALL_ORDER_STATUSES } from '../../../models/order.model';
+import { ProductService } from '../../../core/services/product';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-orders',
@@ -13,7 +15,9 @@ import { OrderListDTO, ALL_ORDER_STATUSES } from '../../../models/order.model';
 })
 export class Orders implements OnInit {
   private orderService = inject(OrderService);
+  private productService = inject(ProductService);
   private cdr = inject(ChangeDetectorRef);
+  private router = inject(Router);
 
   orders: OrderListDTO[] = [];
   loading = true;
@@ -30,6 +34,9 @@ export class Orders implements OnInit {
     this.loadOrders(this.activeFilter);
   }
 
+  getImageUrl(imagePath: string): string {
+    return this.productService.getImageUrl(imagePath);
+  }
   loadOrders(status: string): void {
     this.loading = true;
     this.errorMessage = '';
@@ -46,6 +53,7 @@ export class Orders implements OnInit {
         this.errorMessage = 'Failed to load orders.';
         this.loading = false;
         this.cdr.detectChanges();
+        this.router.navigate(['/server-error']);
       }
     });
   }

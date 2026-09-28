@@ -26,7 +26,7 @@
         @for (order of orders; track order.orderId) {
           <div class="order-row" (click)="viewDetails(order.orderId)">
 
-            <img [src]="order.url" [alt]="order.productName" class="order-thumb" />
+            <img [src]="getImageUrl(order.url)" class="order-thumb" />
 
             <div class="order-info">
               <h4>{{ order.productName }}</h4>

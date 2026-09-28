@@ -30,8 +30,7 @@
         </span>
       </div>
 
-      <!-- Progress tracker -->
-      @if (overallStatus?.toLowerCase() !== 'cancelled') {
+      @if (overallStatus.toLowerCase() !== 'cancelled') {
         <div class="status-tracker">
           @for (step of ['Pending', 'Confirmed', 'Shipped', 'Delivered']; track step; let i = $index) {
             <div class="tracker-step" [class.completed]="i <= getStatusStep(overallStatus)">
@@ -42,13 +41,12 @@
         </div>
       }
 
-      <!-- Product Items -->
       <div class="items-section">
         <h4>Items in this order ({{ items.length }})</h4>
 
         @for (item of items; track item.id) {
           <div class="item-row">
-            <img [src]="item.url" [alt]="item.productName" class="item-thumb" />
+            <img [src]="getImageUrl(item.url)" [alt]="item.productName" class="item-thumb" />
 
             <div class="item-info">
               <h5>{{ item.productName }}</h5>
@@ -63,7 +61,6 @@
         }
       </div>
 
-      <!-- Total -->
       <div class="details-footer">
         <span>Grand Total</span>
         <span class="grand-total">₹{{ grandTotal | number:'1.2-2' }}</span>

@@ -2,7 +2,7 @@ import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
-import { ChangePasswordDTO, Customer } from '../../models/customer.model';
+import { ChangePasswordDTO, Customer, Profile } from '../../models/customer.model';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +15,7 @@ export class UserService {
     return this.http.get<Customer>(`${this.baseUrl}/profile/${id}`);
   }
 
-  updateCustomer(data: Customer): Observable<string> {
+  updateCustomer(data: Profile): Observable<string> {
   return this.http.put(`${this.baseUrl}/update-profile`, data, { responseType: 'text' });
 }changePassword(data: ChangePasswordDTO): Observable<string> {
   return this.http.patch(`${this.baseUrl}/change-password`, data, { responseType: 'text' });

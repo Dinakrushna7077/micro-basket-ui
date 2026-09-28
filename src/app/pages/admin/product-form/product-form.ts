@@ -5,7 +5,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ProductService } from '../../../core/services/product';
 import { ProductDTO } from '../../../models/product.model';
 
-const STATIC_IMAGE_URL = 'assets/prod3.png';
 
 @Component({
   selector: 'app-product-form',
@@ -88,55 +87,95 @@ export class ProductForm implements OnInit {
   }
 
   onSubmit(): void {
-    if (this.productForm.invalid) {
-      this.productForm.markAllAsTouched();
-      return;
+  if (this.productForm.invalid) {
+    this.productForm.markAllAsTouched();
+    return;
+  }
+
+  if (!this.isEditMode && !this.selectedFile) {
+    this.errorMessage = 'Please select a product image.';
+    return;
+  }
+
+  this.submitting = true;
+  this.errorMessage = '';
+  this.successMessage = '';
+
+  const formData = new FormData();
+
+  formData.append(
+    'Id',
+    String(this.isEditMode && this.productId ? this.productId : 0)
+  );
+
+  formData.append(
+    'ProductName',
+    this.productForm.value.productName ?? ''
+  );
+
+  formData.append(
+    'ProductDesc',
+    this.productForm.value.productDesc ?? ''
+  );
+
+  formData.append(
+    'ProductPrice',
+    String(this.productForm.value.productPrice ?? 0)
+  );
+
+  formData.append(
+    'ProductQuantity',
+    String(this.productForm.value.productQuantity ?? 0)
+  );
+
+  // ProductImage is only needed when keeping the existing image.
+  formData.append(
+    'ProductImage',
+    this.isEditMode
+      ? (this.existingImageUrl ?? '')
+      : ''
+  );
+
+  // Add newly selected image
+  if (this.selectedFile) {
+    formData.append(
+      'ImageFile',
+      this.selectedFile,
+      this.selectedFile.name
+    );
+  }
+
+  const request$ = this.isEditMode
+    ? this.productService.updateProduct(formData)
+    : this.productService.addProduct(formData);
+
+  request$.subscribe({
+    next: () => {
+      this.submitting = false;
+
+      this.successMessage = this.isEditMode
+        ? 'Product updated successfully!'
+        : 'Product added successfully!';
+
+      setTimeout(() => {
+        this.router.navigate(['/admin/products']);
+      }, 1200);
+    },
+
+    error: (err) => {
+      console.error('Save product error:', err);
+
+      this.errorMessage =
+        err.error || 'Failed to save product. Please try again.';
+
+      this.submitting = false;
+      this.cdr.detectChanges();
     }
+  });
+}
 
-    if (!this.isEditMode && !this.selectedFile) {
-      this.errorMessage = 'Please select a product image.';
-      return;
-    }
-
-    this.submitting = true;
-    this.errorMessage = '';
-    this.successMessage = '';
-
-    const imageToSend = this.isEditMode && !this.selectedFile
-      ? (this.existingImageUrl ?? STATIC_IMAGE_URL)
-      : STATIC_IMAGE_URL;
-
-    const payload: ProductDTO = {
-      id: this.isEditMode && this.productId ? this.productId : 0,
-      productName: this.productForm.value.productName!,
-      productDesc: this.productForm.value.productDesc || null,
-      productPrice: this.productForm.value.productPrice!,
-      productQuantity: this.productForm.value.productQuantity!,
-      productImage: imageToSend
-    };
-
-    const request$ = this.isEditMode
-      ? this.productService.updateProduct(payload)
-      : this.productService.addProduct(payload);
-
-    request$.subscribe({
-      next: () => {
-        this.submitting = false;
-        this.successMessage = this.isEditMode
-          ? 'Product updated successfully!'
-          : 'Product added successfully!';
-
-        setTimeout(() => {
-          this.router.navigate(['/admin/products']);
-        }, 1200);
-      },
-      error: (err) => {
-        console.error('Save product error:', err);
-        this.errorMessage = err.error || 'Failed to save product. Please try again.';
-        this.submitting = false;
-        this.cdr.detectChanges();
-      }
-    });
+  getImageUrl(imagePath: string): string {
+    return this.productService.getImageUrl(imagePath);
   }
 
   onCancel(): void {

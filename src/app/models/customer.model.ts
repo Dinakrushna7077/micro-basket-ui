@@ -15,3 +15,12 @@ export interface ChangePasswordDTO {
   newPassword: string;
   confirmPassword: string;
 }
+
+export interface Profile 
+{
+  id: number;
+  userName: string;
+  userAdd: string;
+  userPhone: string;
+  userEmail: string;
+}

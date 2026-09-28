@@ -22,7 +22,7 @@
         <div class="product-card" (click)="viewProduct(product.id)">
 
           <div class="product-image-wrap">
-            <img [src]="product.productImage" [alt]="product.productName" class="product-image" />
+            <img [src]="getImageUrl(product.productImage)" [alt]="product.productName" class="product-image" />
             @if (product.productQuantity === 0) {
               <span class="out-of-stock-badge">Out of Stock</span>
             }
@@ -30,7 +30,7 @@
 
           <div class="product-info">
             <h3 class="product-name">{{ product.productName }}</h3>
-            <p class="product-price">₹{{ product.productPrice | number:'1.2-2' }}</p>
+            <p class="product-price">₹{{ product.productPrice }}</p>
 
             <div class="product-actions">
               @if(!this.cartService.isExisting(product))

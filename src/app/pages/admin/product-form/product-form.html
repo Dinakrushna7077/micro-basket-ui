@@ -106,10 +106,10 @@
         @if (imagePreviewUrl || existingImageUrl) {
           <div class="image-preview">
             <label>{{ imagePreviewUrl ? 'New Image Preview' : 'Current Image' }}</label>
-            <img [src]="imagePreviewUrl || existingImageUrl" alt="Preview" />
+            <img [src]="imagePreviewUrl || this.getImageUrl(existingImageUrl!)" alt="Preview" />
             @if (imagePreviewUrl) {
               <p class="field-hint">
-                Note: Upload isn't connected yet — a placeholder image URL will be saved instead.
+                Selected image will be uploaded when you save the product.
               </p>
             }
           </div>

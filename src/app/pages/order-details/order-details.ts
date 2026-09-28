@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { OrderService } from '../../core/services/order';
 import { OrderDetailsDTO } from '../../models/order.model';
+import { ProductService } from '../../core/services/product';
 
 @Component({
   selector: 'app-order-details',
@@ -15,11 +16,13 @@ export class OrderDetails implements OnInit {
   private orderService = inject(OrderService);
   private route = inject(ActivatedRoute);
   private cdr = inject(ChangeDetectorRef);
+  private productService = inject(ProductService);
 
   items: OrderDetailsDTO[] = [];
   loading = true;
   errorMessage = '';
   orderId: number | null = null;
+  router: any;
 
   ngOnInit(): void {
     const idParam = this.route.snapshot.paramMap.get('id');
@@ -44,15 +47,19 @@ export class OrderDetails implements OnInit {
         this.errorMessage = 'Failed to load order details.';
         this.loading = false;
         this.cdr.detectChanges();
+        this.router.navigate(['/server-error']);
       }
     });
+  }
+
+  getImageUrl(imagePath: string): string {
+    return this.productService.getImageUrl(imagePath);
   }
 
   get grandTotal(): number {
     return this.items.reduce((sum, item) => sum + item.price , 0);
   }
 
-  // All items in one order share the same overall status and date
   get overallStatus(): string {
     return this.items[0]?.orderStatus ?? '';
   }

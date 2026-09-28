@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { UserService } from '../../core/services/user';
-import { Customer } from '../../models/customer.model';
+import { Customer, Profile } from '../../models/customer.model';
 
 @Component({
   selector: 'app-profile-edit',
@@ -76,25 +76,21 @@ export class ProfileEdit implements OnInit {
     this.successMessage.set(null);
 
     // 1. Build the full Customer payload including the id and createdDate
-const updatedData: Customer = {
+const updatedData: Profile = {
   id: this.userId()!,
   userName: this.profileForm.value.userName,
   userEmail: this.profileForm.value.userEmail,
   userPhone: this.profileForm.value.userPhone,
   userAdd: this.profileForm.value.userAdd,
-  status: this.profileForm.value.status,
-  createdDate:  new Date().toISOString(),
-  updatedDate: new Date().toISOString()
 };
 
-// 2. Pass only the updatedData object (1 argument)
 this.customerService.updateCustomer(updatedData).subscribe({
   next: (res) => {
     this.isSaving.set(false);
     this.successMessage.set(res || 'Profile updated successfully!');
     setTimeout(() => {
       this.router.navigate(['/profile', this.userId()]);
-    }, 1200);
+    }, 3000);
   },
   error: (err) => {
     this.isSaving.set(false);

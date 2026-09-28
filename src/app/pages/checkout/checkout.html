@@ -16,7 +16,8 @@
           <div class="card border-0 shadow-sm mb-4">
             <div class="card-body p-4">
               <h5 class="card-title fw-bold mb-3">
-                <span><i class="bi bi-geo-alt-fill text-primary me-2"></i>Delivery Address</span> <a class="float-end text-decoration-none" href="/profile/edit/{{ accountService.getUserId() }}">Edit</a>
+                <span><i class="bi bi-geo-alt-fill text-primary me-2"></i>Delivery Address</span>
+                <a class="float-end text-decoration-none" [href]="'/profile/edit/' + accountService.getUserId()">Edit</a>
               </h5>
               <input
                 class="form-control"
@@ -65,7 +66,7 @@
                   (change)="paymentMethod.set('ONLINE')"
                 />
                 <label class="form-check-label w-100 fw-semibold ms-2" for="online">
-                  Online Payment
+                  Online Payment (Razorpay)
                   <small class="text-muted d-block fw-normal">Cards, NetBanking, UPI, and Wallets.</small>
                 </label>
               </div>

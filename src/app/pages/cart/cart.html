@@ -19,8 +19,8 @@
       <!-- Cart Items -->
       <div class="cart-items">
         @for (item of cartService.items(); track item.id) {
-          <div class="cart-item">
-            <img [src]="item.productImage" [alt]="item.productName" class="item-image" />
+          <div class="cart-item" (click)="viewProduct(item.id)">
+            <img [src]="getImageUrl(item.productImage)" [alt]="item.productName" class="item-image" />
 
             <div class="item-info">
               <h4>{{ item.productName }}</h4>
@@ -28,10 +28,10 @@
             </div>
 
             <div class="qty-controls">
-              <button (click)="decreaseQty(item.id, item.quantity)">−</button>
+              <button (click)="$event.stopPropagation();decreaseQty(item.id, item.quantity)">−</button>
               <span>{{ item.quantity }}</span>
               <button
-                (click)="increaseQty(item.id, item.quantity, item.availableStock)"
+                (click)="$event.stopPropagation();increaseQty(item.id, item.quantity, item.availableStock)"
                 [disabled]="item.quantity >= item.availableStock">
                 +
               </button>
@@ -41,7 +41,7 @@
               ₹{{ (item.productPrice * item.quantity) | number:'1.2-2' }}
             </div>
 
-            <button class="btn-remove" (click)="removeItem(item.id)">
+            <button class="btn-remove" (click)="$event.stopPropagation();removeItem(item.id)">
               <i class="bi bi-trash3"></i>
             </button>
           </div>

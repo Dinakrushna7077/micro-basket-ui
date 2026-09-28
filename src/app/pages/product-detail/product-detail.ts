@@ -1,6 +1,6 @@
 import { Component, inject, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router ,RouterLink} from '@angular/router';
 import { ProductService } from '../../core/services/product';
 import { Cart } from '../../core/services/cart';
 import { Product } from '../../models/product.model';
@@ -8,7 +8,7 @@ import { Product } from '../../models/product.model';
 @Component({
   selector: 'app-product-detail',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterLink],
   templateUrl: './product-detail.html',
   styleUrl: './product-detail.css'
 })
@@ -31,6 +31,9 @@ export class ProductDetail implements OnInit {
     }
   }
 
+  getImageUrl(imagePath: string): string {
+    return this.productService.getImageUrl(imagePath);
+  }
   loadProduct(id: number): void {
     this.loading = true;
     this.productService.getProductById(id).subscribe({
@@ -65,9 +68,11 @@ export class ProductDetail implements OnInit {
     this.cartService.addToCart(this.product, this.quantity);
   }
 
-  buyNow(): void {
+  buyNow(product: Product): void {
     if (!this.product) return;
-    this.cartService.addToCart(this.product, this.quantity);
+    if(!this.cartService.isExisting(product)) {
+      this.cartService.addToCart(this.product, this.quantity);
+    }
     this.router.navigate(['/cart']);
   }
 }

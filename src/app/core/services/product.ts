@@ -12,8 +12,8 @@ export class ProductService {
   private http = inject(HttpClient);
   private baseUrl = `${environment.apiUrl}/Product`;
 
-  getAllProducts(): Observable<Product[]> {
-    return this.http.get<Product[]>(`${this.baseUrl}/all-products`);
+  getAllProducts(keyword: string): Observable<Product[]> {
+    return this.http.get<Product[]>(`${this.baseUrl}/all-products/${keyword}`);
   }
 
   getProductById(pid: number): Observable<Product> {
@@ -21,17 +21,23 @@ export class ProductService {
   }
 
   searchProducts(keyword: string): Observable<Product[]> {
-    return this.http.get<Product[]>(`${this.baseUrl}/serach/${keyword}`);
+    return this.http.get<Product[]>(`${this.baseUrl}/search/${keyword}`);
   }
 
-  addProduct(data: ProductDTO): Observable<string> {
+  addProduct(data: FormData): Observable<string> {
     return this.http.post(`${this.baseUrl}/add-new-product`, data, { responseType: 'text' });
   }
 
-  updateProduct(data: ProductDTO): Observable<string> {
+  updateProduct(data: FormData): Observable<string> {
     return this.http.put(`${this.baseUrl}/update-product`, data, { responseType: 'text' });
   }
   getLowStockProducts(): Observable<LowStockDTO[]> {
   return this.http.get<LowStockDTO[]>(`${this.baseUrl}/low-stock`);
+}
+getImageUrl(imagePath: string): string {
+  if (!imagePath) {
+    return 'default-image-url'; 
+  }
+  return `${environment.apiUrl.replace('/api', '')}${imagePath}`;
 }
 }

@@ -1,0 +1,41 @@
+<section class="min-vh-100 d-flex align-items-center justify-content-center p-4 bg-canvas overflow-hidden position-relative">
+  <div class="ambient-orb orb-amber"></div>
+  <div class="ambient-orb orb-indigo"></div>
+
+  <div class="error-content-wrapper text-center position-relative z-1">
+    <!-- Radar Graphic -->
+    <div class="scene-graphic mb-4">
+      <svg viewBox="0 0 160 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="80" cy="60" r="50" stroke="#e2e8f0" stroke-width="2" stroke-dasharray="4 4" />
+        <circle cx="80" cy="60" r="32" stroke="#cbd5e1" stroke-width="2" />
+        <circle cx="80" cy="60" r="14" fill="#ffffff" />
+        <path d="M80 20 L80 60 L105 75" stroke="#f59e0b" stroke-width="3" stroke-linecap="round" />
+        <circle cx="105" cy="75" r="4" fill="#f59e0b" class="pulse-radar" />
+      </svg>
+    </div>
+
+    <!-- Updated Badge -->
+    <span class="status-pill status-pill-amber mb-3">
+      Error 404 &bull; Missing Page
+    </span>
+
+    <h1 class="error-number fw-black text-slate-900 mb-1">404</h1>
+
+    <!-- Updated Heading -->
+    <h2 class="h5 fw-bold text-slate-800 mb-2">
+      We couldn't find that page.
+    </h2>
+
+    <!-- Updated Body Copy -->
+    <p class="text-slate-500 mb-4 mx-auto lead-caption">
+      The link may be outdated, mistyped, or the page may have been moved. Let's get you back on track.
+    </p>
+
+    <!-- Updated Action -->
+    <div class="d-flex justify-content-center">
+      <a routerLink="/" class="btn btn-action-secondary shadow-sm">
+        Back to Home
+      </a>
+    </div>
+  </div>
+</section>

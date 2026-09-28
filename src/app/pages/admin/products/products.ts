@@ -1,6 +1,6 @@
 import { Component, inject, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterLink } from '@angular/router';
+import { RouterLink,Router } from '@angular/router';
 import { ProductService } from '../../../core/services/product';
 import { Product } from '../../../models/product.model';
 import { FormsModule } from '@angular/forms';
@@ -15,6 +15,7 @@ import { FormsModule } from '@angular/forms';
 export class Products implements OnInit {
   private productService = inject(ProductService);
   private cdr = inject(ChangeDetectorRef);
+  private router = inject(Router);
 
   products: Product[] = [];
   loading = true;
@@ -24,12 +25,14 @@ export class Products implements OnInit {
   ngOnInit(): void {
     this.loadProducts();
   }
-
+  getImageUrl(imagePath: string): string {
+    return this.productService.getImageUrl(imagePath);
+  }
   loadProducts(): void {
     this.loading = true;
     this.errorMessage = '';
 
-    this.productService.getAllProducts().subscribe({
+    this.productService.getAllProducts("desc").subscribe({
       next: (res) => {
         this.products = res;
         this.loading = false;
@@ -64,6 +67,7 @@ export class Products implements OnInit {
         this.errorMessage = 'Search failed.';
         this.loading = false;
         this.cdr.detectChanges();
+        this.router.navigate(['/server-error']);
       }
     });
   }

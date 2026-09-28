@@ -9,7 +9,7 @@ const CART_STORAGE_KEY = 'cart';
 })
 export class Cart {
   items = signal<CartItem[]>(this.loadFromStorage());
-
+  cartCount = computed(() => this.items().length);
   totalItems = computed(() =>
     this.items().reduce((sum, item) => sum + item.quantity, 0)
   );

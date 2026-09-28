@@ -1,0 +1,42 @@
+<section class="min-vh-100 d-flex align-items-center justify-content-center p-4 bg-canvas overflow-hidden position-relative">
+  <div class="ambient-orb orb-rose"></div>
+  <div class="ambient-orb orb-slate"></div>
+
+  <div class="error-content-wrapper text-center position-relative z-1">
+    <!-- Disconnected Server Graphic -->
+    <div class="scene-graphic mb-4">
+      <svg viewBox="0 0 160 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="45" y="25" width="70" height="30" rx="8" fill="#ffffff" stroke="#e2e8f0" stroke-width="2" />
+        <rect x="45" y="65" width="70" height="30" rx="8" fill="#ffffff" stroke="#e2e8f0" stroke-width="2" />
+        <circle cx="60" cy="40" r="3" fill="#10b981" />
+        <circle cx="70" cy="40" r="3" fill="#cbd5e1" />
+        <circle cx="60" cy="80" r="3" fill="#ef4444" class="pulse-alarm" />
+        <circle cx="70" cy="80" r="3" fill="#cbd5e1" />
+        <path d="M80 55 L80 65" stroke="#ef4444" stroke-width="2" stroke-linecap="round" stroke-dasharray="2 2" />
+      </svg>
+    </div>
+
+    <span class="status-pill status-pill-coral mb-3">
+      500 &bull; Server Unreachable
+    </span>
+
+    <h1 class="error-number fw-black text-slate-900 mb-1">500</h1>
+
+    <h2 class="h5 fw-bold text-slate-800 mb-2">
+      The server is not responding.
+    </h2>
+
+    <p class="text-slate-500 mb-4 mx-auto lead-caption">
+      Our services are currently unresponsive or encountered an unexpected failure. Try refreshing, or check back shortly.
+    </p>
+
+    <div class="d-flex flex-column flex-sm-row justify-content-center gap-2">
+      <a routerLink="/" class="btn btn-action-primary shadow-sm">
+        Return to App
+      </a>
+      <button type="button" (click)="reloadPage()" class="btn btn-action-secondary">
+        Retry Connection
+      </button>
+    </div>
+  </div>
+</section>

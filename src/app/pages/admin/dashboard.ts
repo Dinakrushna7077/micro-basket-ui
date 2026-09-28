@@ -2,6 +2,7 @@ import { Component, inject, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Admin } from '../../core/services/admin';
 import { DashboardResponse } from '../../models/admin.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
@@ -12,8 +13,8 @@ import { DashboardResponse } from '../../models/admin.model';
 })
 export class Dashboard implements OnInit {
   private adminService = inject(Admin);
-  private cdr = inject(ChangeDetectorRef);   // 👈 add this
-
+  private cdr = inject(ChangeDetectorRef);   
+  private router = inject(Router);
   loading = true;
   errorMessage = '';
   data: DashboardResponse | null = null;
@@ -30,13 +31,14 @@ export class Dashboard implements OnInit {
       next: (res) => {
         this.data = res;
         this.loading = false;
-        this.cdr.detectChanges();   // 👈 force Angular to re-render
+        this.cdr.detectChanges();   
       },
       error: (err) => {
         console.error('Dashboard API error:', err);
         this.errorMessage = 'Failed to load dashboard data.';
         this.loading = false;
-        this.cdr.detectChanges();   // 👈 force Angular to re-render
+        this.cdr.detectChanges(); 
+        this.router.navigate(['/server-error']);
       }
     });
   }
